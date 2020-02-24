@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ona Engineering
-  description: Installs and configures PGRestAPI (Chubbs Spatial Server)
+  description: Installs and configures Dirt-Simple PostGIS HTTP API Spatial server
   company: Ona Systems Inc
   license: Apache-2.0
   min_ansible_version: 2.6

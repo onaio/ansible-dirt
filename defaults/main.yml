@@ -1,48 +1,40 @@
 ---
-# defaults file for ansible-chubbs
-chubbs_system_user: "chubbs"
-chubbs_system_group: "{{ chubbs_system_user }}"
-chubbs_service_name: "{{ chubbs_system_user }}"
-chubbs_init_system: "systemd"
-chubbs_system_groups:
+# defaults file for ansible-dirt
+dirt_system_user: "dirt"
+dirt_system_group: "{{ dirt_system_user }}"
+dirt_service_name: "{{ dirt_system_user }}"
+dirt_init_system: "systemd"
+dirt_system_groups:
   - tty
-chubbs_system_user_home: "/home/{{ chubbs_system_user }}"
-chubbs_apt_dependencies:
-  - clang-3.8
+dirt_system_user_home: "/home/{{ dirt_system_user }}"
+dirt_apt_dependencies:
   - python
-  - zlib1g-dev
-  - make
-  - pkg-config
   - curl
   - git
   - unzip
 
-chubbs_version: "master"
-chubbs_git_url: "https://github.com/onaio/PGRestAPI.git"
+dirt_version: "master"
+dirt_git_url: "https://github.com/onaio/dirt-simple-postgis-http-api.git"
 # The method to use to install the node dependencies
 # Can be:
-#  - archive (make sure you set chubbs_node_packages_archive_url)
+#  - archive (make sure you set dirt_node_packages_archive_url)
 #  - npm
-chubbs_node_deps_install_method: "archive"
-chubbs_node_packages_archive_url: "https://node-modules-backups.s3.eu-central-1.amazonaws.com/pgrestapi.zip"
-chubbs_codebase_path: "{{ chubbs_system_user_home }}/app"
-chubbs_versioned_path: "{{ chubbs_codebase_path }}-versioned"
-chubbs_checkout_path: "{{ chubbs_versioned_path }}/{{ chubbs_version }}"
-chubbs_port: 8585
-chubbs_pgsql_db: "chubbs"
-chubbs_pgsql_user: "chubbs"
-chubbs_pgsql_password: "chubbs"
-chubbs_pgsql_host: "localhost"
-chubbs_pgsql_port: 5432
+dirt_node_deps_install_method: "archive"
+dirt_node_packages_archive_url: "https://node-modules-backups.s3.eu-central-1.amazonaws.com/pgrestapi.zip"
+dirt_codebase_path: "{{ dirt_system_user_home }}/app"
+dirt_versioned_path: "{{ dirt_codebase_path }}-versioned"
+dirt_checkout_path: "{{ dirt_versioned_path }}/{{ dirt_version }}"
+dirt_port: 8585
+dirt_pgsql_db: "dirt"
+dirt_pgsql_user: "dirt"
+dirt_pgsql_password: "dirt"
+dirt_pgsql_host: "localhost"
+dirt_pgsql_port: 5432
 
-chubbs_nvm_node_version: "v0.10.42"
-chubbs_nvm_install_path: "{{ chubbs_system_user_home }}/.nvm"
-chubbs_nvm_node_dir: "{{ chubbs_system_user_home }}/.nvm/{{ chubbs_nvm_node_version }}"
-chubbs_nvm_npm_path: "{{ chubbs_nvm_node_dir }}/bin/npm"
-chubbs_nvm_version: "v0.34.0"
-chubbs_nvm_pm2_path: "{{ chubbs_nvm_node_dir }}/bin/pm2"
-chubbs_nvm_pm2_version: "2.4.6"
-
-chubbs_mapnik_git_url: "https://github.com/mapnik/mapnik"
-chubbs_mapnik_version: "master"
-chubbs_mapnik_install_dir: "{{ chubbs_system_user_home }}/mapnik"
+dirt_nvm_node_version: "v0.10.42"
+dirt_nvm_install_path: "{{ dirt_system_user_home }}/.nvm"
+dirt_nvm_node_dir: "{{ dirt_system_user_home }}/.nvm/{{ dirt_nvm_node_version }}"
+dirt_nvm_npm_path: "{{ dirt_nvm_node_dir }}/bin/npm"
+dirt_nvm_version: "v0.34.0"
+dirt_nvm_pm2_path: "{{ dirt_nvm_node_dir }}/bin/pm2"
+dirt_nvm_pm2_version: "2.4.6"

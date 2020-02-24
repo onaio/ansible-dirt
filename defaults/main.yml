@@ -1,0 +1,48 @@
+---
+# defaults file for ansible-chubbs
+chubbs_system_user: "chubbs"
+chubbs_system_group: "{{ chubbs_system_user }}"
+chubbs_service_name: "{{ chubbs_system_user }}"
+chubbs_init_system: "systemd"
+chubbs_system_groups:
+  - tty
+chubbs_system_user_home: "/home/{{ chubbs_system_user }}"
+chubbs_apt_dependencies:
+  - clang-3.8
+  - python
+  - zlib1g-dev
+  - make
+  - pkg-config
+  - curl
+  - git
+  - unzip
+
+chubbs_version: "master"
+chubbs_git_url: "https://github.com/onaio/PGRestAPI.git"
+# The method to use to install the node dependencies
+# Can be:
+#  - archive (make sure you set chubbs_node_packages_archive_url)
+#  - npm
+chubbs_node_deps_install_method: "archive"
+chubbs_node_packages_archive_url: "https://node-modules-backups.s3.eu-central-1.amazonaws.com/pgrestapi.zip"
+chubbs_codebase_path: "{{ chubbs_system_user_home }}/app"
+chubbs_versioned_path: "{{ chubbs_codebase_path }}-versioned"
+chubbs_checkout_path: "{{ chubbs_versioned_path }}/{{ chubbs_version }}"
+chubbs_port: 8585
+chubbs_pgsql_db: "chubbs"
+chubbs_pgsql_user: "chubbs"
+chubbs_pgsql_password: "chubbs"
+chubbs_pgsql_host: "localhost"
+chubbs_pgsql_port: 5432
+
+chubbs_nvm_node_version: "v0.10.42"
+chubbs_nvm_install_path: "{{ chubbs_system_user_home }}/.nvm"
+chubbs_nvm_node_dir: "{{ chubbs_system_user_home }}/.nvm/{{ chubbs_nvm_node_version }}"
+chubbs_nvm_npm_path: "{{ chubbs_nvm_node_dir }}/bin/npm"
+chubbs_nvm_version: "v0.34.0"
+chubbs_nvm_pm2_path: "{{ chubbs_nvm_node_dir }}/bin/pm2"
+chubbs_nvm_pm2_version: "2.4.6"
+
+chubbs_mapnik_git_url: "https://github.com/mapnik/mapnik"
+chubbs_mapnik_version: "master"
+chubbs_mapnik_install_dir: "{{ chubbs_system_user_home }}/mapnik"

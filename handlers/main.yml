@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-chubbs
+- name: reload pm2
+  service:
+    name: "pm2-{{ dirt_service_name }}"
+    state: reloaded
+    enabled: true

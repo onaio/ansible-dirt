@@ -1,0 +1,17 @@
+var config = {};
+
+config.db = {{ dirt_db_uri }};
+
+config.whitelist = []
+
+config.cache = {{ dirt_cache_timeout }};
+
+
+config.port = {{ dirt_pgsql_port }};
+
+
+config.allowLogging = true
+
+config.cors_origin_whitelist = {{ dirt_cors_whitelist }}
+
+module.exports = config;

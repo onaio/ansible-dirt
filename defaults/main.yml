@@ -14,22 +14,22 @@ dirt_apt_dependencies:
   - unzip
 
 dirt_version: "master"
+dirt_cors_whitelist: ["http://localhost:3000", "https://ona.io", "https://preview.ona.io", "https://stage.ona.io"]
 dirt_git_url: "https://github.com/onaio/dirt-simple-postgis-http-api.git"
 # The method to use to install the node dependencies
 # Can be:
 #  - archive (make sure you set dirt_node_packages_archive_url)
 #  - npm
-dirt_node_deps_install_method: "archive"
-dirt_node_packages_archive_url: "https://node-modules-backups.s3.eu-central-1.amazonaws.com/pgrestapi.zip"
 dirt_codebase_path: "{{ dirt_system_user_home }}/app"
 dirt_versioned_path: "{{ dirt_codebase_path }}-versioned"
 dirt_checkout_path: "{{ dirt_versioned_path }}/{{ dirt_version }}"
-dirt_port: 8585
+dirt_port: 3000
 dirt_pgsql_db: "dirt"
 dirt_pgsql_user: "dirt"
 dirt_pgsql_password: "dirt"
 dirt_pgsql_host: "localhost"
 dirt_pgsql_port: 5432
+dirt_db_uri: "postgres://{{ dirt_pgsql_user }}:{{ dirt_pgsql_password }}@{{ dirt_pgsql_host }}/{{ dirt_pgsql_db }}"
 
 dirt_nvm_node_version: "v0.10.42"
 dirt_nvm_install_path: "{{ dirt_system_user_home }}/.nvm"

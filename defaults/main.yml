@@ -29,7 +29,7 @@ dirt_pgsql_user: "dirt"
 dirt_pgsql_password: "dirt"
 dirt_pgsql_host: "localhost"
 dirt_pgsql_port: 5432
-dirt_db_uri: "postgres://{{ dirt_pgsql_user }}:{{ dirt_pgsql_password }}@{{ dirt_pgsql_host }}/{{ dirt_pgsql_db }}"
+dirt_db_url: "postgres://{{ dirt_pgsql_user }}:{{ dirt_pgsql_password }}@{{ dirt_pgsql_host }}/{{ dirt_pgsql_db }}"
 dirt_cache_timeout: 3600
 
 dirt_nvm_node_version: "v10.1.0"

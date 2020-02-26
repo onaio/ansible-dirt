@@ -36,7 +36,6 @@
   become: true
   become_user: "{{ dirt_system_user }}"
   git:
-
     repo: "{{ dirt_git_url }}"
     dest: "{{ dirt_checkout_path }}"
     version: "{{ dirt_version }}"

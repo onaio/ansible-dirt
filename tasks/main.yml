@@ -14,6 +14,11 @@
     createhome: yes
     home: "{{ dirt_system_user_home }}"
 
+- name: Install dependencies
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+  with_items: "{{ dirt_apt_dependencies }}"
 
 - name: Install Node Version Manager
   include_role:

@@ -1,5 +1,13 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Install git
+      become: true
+      become_user: root
+      apt:
+        name: git
+        state: present
   roles:
     - role: dirt
+

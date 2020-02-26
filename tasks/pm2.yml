@@ -25,7 +25,7 @@
 - name: start pm2 app
   become: true
   become_user: "{{ dirt_system_user }}"
-  shell: "{{ dirt_nvm_pm2_path }} start app.js -i 0 -n {{ dirt_service_name }}"
+  shell: "{{ dirt_nvm_pm2_path }} start index.js -i 0 -n {{ dirt_service_name }}"
   args:
     chdir: "{{ dirt_codebase_path }}"
   environment:
@@ -53,6 +53,7 @@
     - "reload pm2"
 
 - name: generate an PM2 init service file
+  become: true
   shell: "{{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"

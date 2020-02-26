@@ -13,7 +13,7 @@ dirt_apt_dependencies:
   - git
   - unzip
 
-dirt_version: "master"
+dirt_version: "add-logging-and-enable-cors"
 dirt_cors_whitelist: ["http://localhost:3000", "https://ona.io", "https://preview.ona.io", "https://stage.ona.io"]
 dirt_git_url: "https://github.com/onaio/dirt-simple-postgis-http-api.git"
 # The method to use to install the node dependencies
@@ -30,10 +30,11 @@ dirt_pgsql_password: "dirt"
 dirt_pgsql_host: "localhost"
 dirt_pgsql_port: 5432
 dirt_db_uri: "postgres://{{ dirt_pgsql_user }}:{{ dirt_pgsql_password }}@{{ dirt_pgsql_host }}/{{ dirt_pgsql_db }}"
+dirt_cache_timeout: 3600
 
-dirt_nvm_node_version: "v0.10.42"
+dirt_nvm_node_version: "v10.1.0"
 dirt_nvm_install_path: "{{ dirt_system_user_home }}/.nvm"
-dirt_nvm_node_dir: "{{ dirt_system_user_home }}/.nvm/{{ dirt_nvm_node_version }}"
+dirt_nvm_node_dir: "{{ dirt_nvm_install_path }}/versions/node/{{ dirt_nvm_node_version }}"
 dirt_nvm_npm_path: "{{ dirt_nvm_node_dir }}/bin/npm"
 dirt_nvm_version: "v0.34.0"
 dirt_nvm_pm2_path: "{{ dirt_nvm_node_dir }}/bin/pm2"

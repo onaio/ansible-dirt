@@ -53,7 +53,7 @@
 
 - name: Copy dirt server index.js to config directory
   template:
-    src: dirt_checkout_path/config/index.js.j2
+    src: "{{ dirt_checkout_path }}/config/index.js.j2"
     dest: "{{ dirt_checkout_path }}/config/index.js"
     mode: 0644
 

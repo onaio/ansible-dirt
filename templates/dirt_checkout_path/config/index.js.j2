@@ -6,14 +6,22 @@ config.whitelist = []
 
 config.cache = {{ dirt_cache_timeout }};
 
-
 config.port = {{ dirt_port }};
-
 
 config.allowLogging = true
 
 config.cors_origin_whitelist = {{ dirt_cors_whitelist }}
 
-config.onadata.formsEndpoint = {{ dirt_onadata_forms_endpoint }}
+config.onadata = {};
+
+config.onadata.formsEndpoint = '{{ dirt_onadata_forms_endpoint }}';
+
+config.table = {};
+
+config.table.name = 'logger_instance';
+
+config.table.column = 'geom';
+
+
 
 module.exports = config;

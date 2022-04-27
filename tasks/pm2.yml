@@ -45,6 +45,8 @@
     - "reload pm2"
 
 - name: delete the old startup file
+  become: true
+  become_user: "root"
   shell: "{{ dirt_nvm_pm2_path }} unstartup {{ dirt_init_system }} -u {{ dirt_system_user }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
@@ -52,9 +54,15 @@
   notify:
     - "reload pm2"
 
+- name: Cleanup pm2 processes
+  become: true
+  become_user: "root"
+  shell: "killall -u {{ dirt_system_user }}"
+
 - name: generate an PM2 init service file
   become: true
-  shell: "{{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
+  become_user: "root"
+  command: "{{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
   notify:

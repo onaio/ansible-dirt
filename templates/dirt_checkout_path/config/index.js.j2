@@ -6,14 +6,24 @@ config.whitelist = []
 
 config.cache = {{ dirt_cache_timeout }};
 
-
 config.port = {{ dirt_port }};
-
 
 config.allowLogging = true
 
-config.cors_origin_whitelist = {{ dirt_cors_whitelist }}
+config.fastifyCorsOptions = {};
 
-config.onadata.formsEndpoint = {{ dirt_onadata_forms_endpoint }}
+config.fastifyCorsOptions.cors_origin_whitelist = {{ dirt_cors_whitelist }}
+
+config.onadata = {};
+
+config.onadata.formsEndpoint = '{{ dirt_onadata_forms_endpoint }}';
+
+config.table = {};
+
+config.table.name = '{{ dirt_table_name }}';
+
+config.table.column = '{{ dirt_table_column }}';
+
+
 
 module.exports = config;

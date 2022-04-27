@@ -19,6 +19,9 @@ dirt_version: "add-logging-and-enable-cors"
 dirt_cors_whitelist: ["http://localhost:3000", "https://ona.io", "https://preview.ona.io", "https://stage.ona.io"]
 dirt_git_url: "https://github.com/onaio/dirt-simple-postgis-http-api.git"
 dirt_onadata_forms_endpoint: "https://stage-api.ona.io/api/v1/forms/"
+dirt_table_name: "logger_instance"
+dirt_table_column: "geom"
+
 # The method to use to install the node dependencies
 # Can be:
 #  - archive (make sure you set dirt_node_packages_archive_url)

@@ -15,7 +15,7 @@
   become_user: "{{ dirt_system_user }}"
   shell: "{{ dirt_nvm_pm2_path }} delete {{ dirt_service_name }}"
   # this shell fails if the process has not yet been started
-  ignore_errors: yes
+  ignore_errors: True
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
@@ -31,6 +31,13 @@
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
+    POSTGRES_CONNECTION: "{{ dirt_db_url }}"
+    TABLE_COLUMN: "{{ dirt_table_column }}"
+    TABLE_NAME: "{{ dirt_table_name }}"
+    SERVER_PORT: "{{ dirt_port }}"
+    SERVER_LOGGER: "{{ dirt_server_logging }}"
+    FORMS_ENDPOINT: "{{ dirt_onadata_forms_endpoint }}"
+    CORS_ORIGINS: "{{ dirt_cors_whitelist }}"
   notify:
     - "reload pm2"
 
@@ -50,7 +57,7 @@
   shell: "{{ dirt_nvm_pm2_path }} unstartup {{ dirt_init_system }} -u {{ dirt_system_user }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
-  ignore_errors: yes
+  ignore_errors: True
   notify:
     - "reload pm2"
 
@@ -58,6 +65,8 @@
   become: true
   become_user: "root"
   shell: "killall -u {{ dirt_system_user }}"
+  # for local testing you might need the following
+  # shell: "pkill -u {{ dirt_system_user }}"
 
 - name: generate an PM2 init service file
   become: true

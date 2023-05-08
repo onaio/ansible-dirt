@@ -1,0 +1,42 @@
+---
+- name: Verify
+  hosts: zebra-ubuntu
+  become: true
+  tasks:
+    - include_vars:
+        dir: ../../defaults
+        ignore_unknown_extensions: True
+        extensions:
+          - ''
+          - 'yaml'
+          - 'yml'
+          - 'json'
+
+    # - name: populate asset_directory
+    #   stat:
+    #     path: "{{ zebra_asset_path }}"
+    #   register: asset_directory
+
+    # - name: Ensure asset directory exists
+    #   fail:
+    #   when: not asset_directory.stat.exists
+
+    # - name: Populate service facts
+    #   service_facts:
+
+    # - name: Check that zebra service exists
+    #   fail:
+    #   when: not ansible_facts.services["zebra.service"]
+
+    # - name: Populate host_file.
+    #   stat:
+    #     path: "/etc/hosts"
+    #   register: host_file
+
+    # - name: Check that host file belongs to root group
+    #   fail:
+    #   when: not host_file.stat.gr_name == "root"
+
+    # - name: Check that host file belongs to root user
+    #   fail:
+    #   when: not host_file.stat.pw_name == "root"

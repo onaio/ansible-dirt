@@ -51,12 +51,6 @@
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
 
-- name: Copy dirt server index.js to config directory
-  template:
-    src: dirt_checkout_path/config/index.js.j2
-    dest: "{{ dirt_checkout_path }}/config/index.js"
-    mode: 0644
-
 - name: Make the new codebase current
   become: true
   become_user: "{{ dirt_system_user }}"

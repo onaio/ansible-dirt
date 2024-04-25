@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: dirt-ubuntu
+  become: true
+  tasks:
+    - import_role:
+        # LOCAL-TESTING: you might need to change this to zebra
+        name: dirt
+      vars:
+        zebra_as_service: true
+        zebra_install_redis: true
+        # use_copy: True
+        # LOCAL-TESTING: you might want to add a path to your git_key here
+        # zebra_git_key: "/home/apiyo/gitrepos/infrastructure/ansible/files/git_key"
+        # ansible_user: "ansible"

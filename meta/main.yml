@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: dirt
+  namespace: onaio
   author: Ona Engineering
   description: Installs and configures Dirt-Simple PostGIS HTTP API Spatial server
   company: Ona Systems Inc

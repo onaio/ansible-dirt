@@ -8,7 +8,7 @@ dirt_system_groups:
   - tty
 dirt_system_user_home: "/home/{{ dirt_system_user }}"
 dirt_apt_dependencies:
-  - python
+  - python3
   - curl
   - git
   - unzip

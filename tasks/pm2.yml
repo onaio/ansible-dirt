@@ -15,7 +15,7 @@
   become_user: "{{ dirt_system_user }}"
   shell: "{{ dirt_nvm_pm2_path }} delete {{ dirt_service_name }}"
   # this shell fails if the process has not yet been started
-  ignore_errors: yes
+  ignore_errors: true
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
@@ -56,13 +56,13 @@
 
 - name: Cleanup pm2 processes
   become: true
+  ignore_errors: true
   become_user: "root"
   shell: "killall -u {{ dirt_system_user }}"
 
 - name: generate an PM2 init service file
   become: true
-  become_user: "root"
-  command: "{{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
+  command: "env NODE_NO_WARNINGS=1 {{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
   notify:

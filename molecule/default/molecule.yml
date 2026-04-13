@@ -3,7 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint: yamllint
 platforms:
   - name: nginx-ubuntu-20.04
     image: geerlingguy/docker-ubuntu2004-ansible:latest
@@ -16,12 +15,7 @@ platforms:
       LANG: "C.UTF-8"
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
-    enabled: true
 scenario:
   name: default
 verifier:
   name: testinfra
-  lint:
-    name: flake8

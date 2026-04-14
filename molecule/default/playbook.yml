@@ -2,6 +2,12 @@
 - name: Converge
   hosts: all
   pre_tasks:
+    - name: Apt update and upgrade
+      become: true
+      become_user: root
+      apt:
+        upgrade: true
+        update_cache: true
     - name: Install git
       become: true
       become_user: root
@@ -10,4 +16,3 @@
         state: present
   roles:
     - role: dirt
-

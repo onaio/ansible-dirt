@@ -45,16 +45,18 @@
 - name: Install Dirt npm packages
   become: true
   become_user: "{{ dirt_system_user }}"
-  npm:
-    executable: "{{ dirt_nvm_npm_path }}"
-    path: "{{ dirt_checkout_path }}"
+  shell: "{{ dirt_nvm_npm_path }} install"
+  args:
+    chdir: "{{ dirt_checkout_path }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
 
 - name: Copy dirt server index.js to config directory
+  become: true
+  become_user: "{{ dirt_system_user }}"
   template:
-    src: dirt_checkout_path/config/index.js.j2
-    dest: "{{ dirt_checkout_path }}/config/index.js"
+    src: dirt_checkout_path/config/.env.j2
+    dest: "{{ dirt_checkout_path }}/.env"
     mode: 0644
 
 - name: Make the new codebase current

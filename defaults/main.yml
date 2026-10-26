@@ -16,7 +16,7 @@ dirt_apt_dependencies:
   - libprotobuf-dev
   - libprotobuf-c-dev
 
-dirt_version: "0.4.14"
+dirt_version: "0.6.3"
 dirt_cors_whitelist:
   ["http://localhost:3000", "https://ona.io", "https://preview.ona.io", "https://stage.ona.io"]
 dirt_git_url: "https://github.com/onaio/dirt-simple-postgis-http-api.git"
@@ -44,7 +44,7 @@ dirt_pgsql_port: 5432
 dirt_db_url: "postgres://{{ dirt_pgsql_user }}:{{ dirt_pgsql_password }}@{{ dirt_pgsql_host }}/{{ dirt_pgsql_db }}"
 dirt_cache_timeout: 3600
 
-dirt_nvm_node_version: "v20.17.0"
+dirt_nvm_node_version: "v22.23.4"
 dirt_nvm_install_path: "{{ dirt_system_user_home }}/.nvm"
 dirt_nvm_node_dir: "{{ dirt_nvm_install_path }}/versions/node/{{ dirt_nvm_node_version }}"
 dirt_nvm_npm_path: "{{ dirt_nvm_node_dir }}/bin/npm"

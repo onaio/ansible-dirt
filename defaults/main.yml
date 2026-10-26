@@ -50,4 +50,4 @@ dirt_nvm_node_dir: "{{ dirt_nvm_install_path }}/versions/node/{{ dirt_nvm_node_v
 dirt_nvm_npm_path: "{{ dirt_nvm_node_dir }}/bin/npm"
 dirt_nvm_version: "v0.40.0"
 dirt_nvm_pm2_path: "{{ dirt_nvm_node_dir }}/bin/pm2"
-dirt_nvm_pm2_version: "4.2.3"
+dirt_nvm_pm2_version: "5.4.3"

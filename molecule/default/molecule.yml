@@ -20,5 +20,16 @@ provisioner:
     converge: playbook.yml
 scenario:
   name: default
+  test_sequence:
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # Each run redeploys and restarts dirt, so idempotence does not apply
+    - side_effect
+    - verify
+    - destroy
 verifier:
   name: testinfra

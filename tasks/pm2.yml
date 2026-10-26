@@ -54,11 +54,13 @@
   notify:
     - "reload pm2"
 
-- name: Cleanup pm2 processes
+- name: Stop the pm2 daemon so systemd can own the next one
   become: true
   ignore_errors: true
-  become_user: "root"
-  shell: "killall -u {{ dirt_system_user }}"
+  become_user: "{{ dirt_system_user }}"
+  command: "{{ dirt_nvm_pm2_path }} kill"
+  environment:
+    PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
 
 - name: generate an PM2 init service file
   become: true

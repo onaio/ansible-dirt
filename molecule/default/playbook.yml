@@ -15,4 +15,4 @@
         name: git
         state: present
   roles:
-    - role: dirt
+    - role: ../../..

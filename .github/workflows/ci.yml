@@ -30,8 +30,17 @@ jobs:
 
       - name: Run Molecule tests
         working-directory: "${{ github.repository }}"
-        run: molecule test
+        run: molecule test --destroy=never
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+
+      - name: Show pm2 service state on failure
+        if: failure()
+        run: >-
+          docker exec instance bash -c
+          "cat /etc/systemd/system/pm2-dirt.service;
+          systemctl status pm2-dirt --no-pager;
+          journalctl -u pm2-dirt --no-pager | tail -n 60;
+          ls -la /home/dirt/.pm2"

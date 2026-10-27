@@ -5,14 +5,16 @@
     - name: Apt update and upgrade
       become: true
       become_user: root
-      apt:
+      ansible.builtin.apt:
         upgrade: true
         update_cache: true
     - name: Install git
       become: true
       become_user: root
-      apt:
+      ansible.builtin.apt:
         name: git
         state: present
-  roles:
-    - role: ../../..
+  tasks:
+    - name: Run the role
+      ansible.builtin.include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"

@@ -2,75 +2,82 @@
 - name: Install Node.js Packages
   become: true
   become_user: "{{ dirt_system_user }}"
-  npm:
-    global: yes
+  community.general.npm:
+    global: true
     name: pm2
     executable: "{{ dirt_nvm_npm_path }}"
     version: "{{ dirt_nvm_pm2_version }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
 
-- name: delete specific pm2 process
+- name: Delete specific pm2 process
   become: true
   become_user: "{{ dirt_system_user }}"
-  shell: "{{ dirt_nvm_pm2_path }} delete {{ dirt_service_name }}"
-  # this shell fails if the process has not yet been started
-  ignore_errors: true
+  ansible.builtin.command: "{{ dirt_nvm_pm2_path }} delete {{ dirt_service_name }}"
+  changed_when: true
+  failed_when: false
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
   notify:
-    - "reload pm2"
+    - "Reload pm2"
 
-- name: start pm2 app
+- name: Start pm2 app
   become: true
   become_user: "{{ dirt_system_user }}"
-  shell: "{{ dirt_nvm_pm2_path }} start index.js -i 0 -n {{ dirt_service_name }}"
+  ansible.builtin.command: "{{ dirt_nvm_pm2_path }} start index.js -i 0 -n {{ dirt_service_name }}"
+  changed_when: true
   args:
     chdir: "{{ dirt_codebase_path }}"
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
   notify:
-    - "reload pm2"
+    - "Reload pm2"
 
-- name: save the current PM2 running list
+- name: Save the current PM2 running list
   become: true
   become_user: "{{ dirt_system_user }}"
-  shell: "{{ dirt_nvm_pm2_path }} save"
+  ansible.builtin.command: "{{ dirt_nvm_pm2_path }} save"
+  changed_when: true
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
     HOME: "{{ dirt_system_user_home }}"
   notify:
-    - "reload pm2"
+    - "Reload pm2"
 
-- name: delete the old startup file
+- name: Delete the old startup file
   become: true
   become_user: "root"
-  shell: "{{ dirt_nvm_pm2_path }} unstartup {{ dirt_init_system }} -u {{ dirt_system_user }}"
+  ansible.builtin.command: "{{ dirt_nvm_pm2_path }} unstartup {{ dirt_init_system }} -u {{ dirt_system_user }}"
+  changed_when: true
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
-  ignore_errors: yes
+  failed_when: false
   notify:
-    - "reload pm2"
+    - "Reload pm2"
 
 - name: Stop the pm2 daemon so systemd can own the next one
   become: true
-  ignore_errors: true
+  failed_when: false
   become_user: "{{ dirt_system_user }}"
-  command: "{{ dirt_nvm_pm2_path }} kill"
+  ansible.builtin.command: "{{ dirt_nvm_pm2_path }} kill"
+  changed_when: true
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
 
-- name: generate an PM2 init service file
+- name: Generate an PM2 init service file
   become: true
-  command: "env NODE_NO_WARNINGS=1 {{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }} -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}"
+  ansible.builtin.command: >-
+    env NODE_NO_WARNINGS=1 {{ dirt_nvm_pm2_path }} startup {{ dirt_init_system }}
+    -u {{ dirt_system_user }} --hp {{ dirt_system_user_home }}
+  changed_when: true
   environment:
     PATH: "{{ dirt_nvm_node_dir }}/bin:{{ ansible_env.PATH }}"
   notify:
-    - "reload pm2"
+    - "Reload pm2"
 
 - name: Enable the PM2 service
-  service:
+  ansible.builtin.service:
     name: "pm2-{{ dirt_service_name }}"
-    enabled: yes
+    enabled: true

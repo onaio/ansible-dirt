@@ -6,12 +6,12 @@ galaxy_info:
   description: Installs and configures Dirt-Simple PostGIS HTTP API Spatial server
   company: Ona Systems Inc
   license: Apache-2.0
-  min_ansible_version: 2.6
+  min_ansible_version: "2.6"
   platforms:
     - name: Ubuntu
       versions:
-        - 22.04
-        - 24.04
+        - jammy
+        - noble
   galaxy_tags:
     - spatial
     - dirt

@@ -1,27 +1,27 @@
 ---
 - name: Add spatial-server system group
-  group:
+  ansible.builtin.group:
     name: "{{ dirt_system_group }}"
     state: present
 
 - name: Add spatial-server system user
-  user:
+  ansible.builtin.user:
     name: "{{ dirt_system_user }}"
     shell: /bin/bash
     group: "{{ dirt_system_group }}"
     groups: "{{ dirt_system_groups }}"
-    append: yes
-    createhome: yes
+    append: true
+    createhome: true
     home: "{{ dirt_system_user_home }}"
 
 - name: Install dependencies
-  apt:
-    update_cache: yes
+  ansible.builtin.apt:
+    update_cache: true
     name: "{{ item }}"
   with_items: "{{ dirt_apt_dependencies }}"
 
 - name: Install Node Version Manager
-  include_role:
+  ansible.builtin.include_role:
     name: onaio.nvm
   vars:
     nvm_user: "{{ dirt_system_user }}"
@@ -35,7 +35,7 @@
 - name: Download Dirt
   become: true
   become_user: "{{ dirt_system_user }}"
-  git:
+  ansible.builtin.git:
     repo: "{{ dirt_git_url }}"
     dest: "{{ dirt_checkout_path }}"
     version: "{{ dirt_version }}"
@@ -45,7 +45,8 @@
 - name: Install Dirt npm packages
   become: true
   become_user: "{{ dirt_system_user }}"
-  shell: "{{ dirt_nvm_npm_path }} install"
+  ansible.builtin.command: "{{ dirt_nvm_npm_path }} install"
+  changed_when: true
   args:
     chdir: "{{ dirt_checkout_path }}"
   environment:
@@ -54,19 +55,19 @@
 - name: Copy dirt server index.js to config directory
   become: true
   become_user: "{{ dirt_system_user }}"
-  template:
+  ansible.builtin.template:
     src: dirt_checkout_path/config/.env.j2
     dest: "{{ dirt_checkout_path }}/.env"
-    mode: 0644
+    mode: "0644"
 
 - name: Make the new codebase current
   become: true
   become_user: "{{ dirt_system_user }}"
-  file:
-    force: yes
+  ansible.builtin.file:
+    force: true
     state: link
     dest: "{{ dirt_codebase_path }}"
     src: "{{ dirt_checkout_path }}"
 
 - name: Configure PM2
-  include_tasks: pm2.yml
+  ansible.builtin.include_tasks: pm2.yml

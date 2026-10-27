@@ -1,0 +1,68 @@
+---
+name: CI
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install lint dependencies
+        run: pip3 install "ansible==14.*" "ansible-lint==26.*" "yamllint==1.*"
+
+      - name: Lint YAML
+        run: yamllint .
+
+      - name: Lint Ansible
+        run: ansible-lint
+
+  test:
+    name: Molecule
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - ubuntu2204
+          - ubuntu2404
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: "${{ github.repository }}"
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install test dependencies
+        run: pip3 install "ansible==14.*" "molecule==26.*" "molecule-plugins[docker]==26.*" docker "pytest-testinfra==10.*"
+
+      - name: Run Molecule tests
+        working-directory: "${{ github.repository }}"
+        run: molecule test --destroy=never
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+
+      - name: Show pm2 service state on failure
+        if: failure()
+        run: >-
+          docker exec instance bash -c
+          "cat /etc/systemd/system/pm2-dirt.service;
+          systemctl status pm2-dirt --no-pager;
+          journalctl -u pm2-dirt --no-pager | tail -n 60;
+          ls -la /home/dirt/.pm2"
